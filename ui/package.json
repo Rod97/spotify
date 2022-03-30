@@ -12,8 +12,12 @@
   },
   "dependencies": {
     "react": "17.0.2",
+    "react-dom": "^18.0.0",
     "react-native": "0.67.1",
-    "react-native-windows": "0.67.0"
+    "react-native-windows": "0.67.0",
+    "react-router-native": "^6.2.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
