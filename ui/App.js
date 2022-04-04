@@ -26,6 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Login from './src/components/login';
+import MyInlineWeb from './src/components/song';
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -64,6 +65,7 @@ const App: () => Node = () => {
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            flex:1
           }}>
             <Login/>
         </View>
