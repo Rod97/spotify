@@ -2,36 +2,42 @@ import React, { useState } from "react";
 import { Buttons } from "react-native/Libraries/Alert/Alert";
 import { View, Text, Button } from 'react-native';
 import { WebView } from 'react-native-webview'
+import randomstring from 'randomstring';
+import base64url from 'base64url'
 
 
 const Login = () => {
     const [htmlString, setHtmlString] = useState('')
-    const urlEncode = () => {
-        const str = 'KPZ2TiRJecFS14oDCkxrKeu8p0SoN0McdyeyiMxLSyBGOtrFE3gVgPZhCDjq';
-        return btoa(String.fromCharCode.apply(null,
-            new Uint8Array(str))).replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=+$/, '')
+
+    const generateChallenge = () => {
+        console.log(randomstring.generate())
+        // const code_verifier = randomstring.generate(128);
+        // return code_verifier;
+        // const base64Digest = crypto.createHash('sha256')
+        //     .update(code_verifier)
+        //     .digest('base64');
+        // const code_challenge = base64url.fromBase64(base64Digest);
+
+        // return code_challenge;
     }
-    
-    const generateRandomString = (length) => {
-        let randomString = (Math.random() * 1000).toString(36).substring(3, length + 3);
-        console.log(randomString.length)
-        return randomString
-    }
-    
+
     const sendRequest = () => {
         const url = 'https://accounts.spotify.com/authorize?'
-        const state = '3pFuPfzAduLafTxY9QKj';
-        const queryString = `responseType=code&client_id=2478b4b2f2434c329b2f14deee0c4e9a&scope=streaming&redirect_uri=http%3A%2F%2FlocalhostF&state=${state}&code_challenge_method=S256&code_challenge=${urlEncode()}`;
-    
+        const client_id = '2478b4b2f2434c329b2f14deee0c4e9a'
+        const response_type = 'code';
+        const redirect_uri = 'http://localhost'
+        const scope = 'user-read-email';
+        const code_challenge_method = 'S256';
+        const code_challenge = generateChallenge();
+        const queryString = `${client_id}&${response_type}&${redirect_uri}&${scope}&${code_challenge_method}&${code_challenge}`;
+
         fetch(`${url}${queryString}`).then((res) => {
             console.log({ res })
-            setHtmlString(res._bodyInit);
+            setHtmlString('<h1>I have returned</h1>');
         })
-        .catch((e) => {
-            console.log(e)
-        });
+            .catch((e) => {
+                console.log(e)
+            });
     }
     return (
         <View
@@ -42,10 +48,10 @@ const Login = () => {
                 color='black'
             />
             {
-                htmlString ? 
-                <WebView
-                    source={{ html: htmlString }}
-                    style={{ flex: 1, textColor: 'black' }} />:
+                htmlString ?
+                    <WebView
+                        source={{ html: htmlString }}
+                        style={{ flex: 1, textColor: 'black' }} /> :
                     null
             }
         </View>

@@ -11,6 +11,8 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
+    "base64url": "^3.0.1",
+    "randomstring": "^1.2.2",
     "react": "17.0.2",
     "react-dom": "^18.0.0",
     "react-native": "0.67.1",
