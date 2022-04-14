@@ -8,18 +8,7 @@ import base64url from 'base64url'
 const Login = () => {
     const [uri, setUri] = useState('');
     const [authCode, setAuthCode] = useState('');
-
-    // const generateChallenge = () => {
-
-    //     const code_verifier = randomString(16);
-    //     const base64Digest = crypto.
-    //     createHash('sha256')
-    //         .update(code_verifier)
-    //         .digest('base64');
-    //     const code_challenge = base64url.fromBase64(base64Digest);
-
-    //     return code_challenge;
-    // }
+    const [html, setHtml] = useState('');
 
     const randomString = (length) => {
         let randString = '';
@@ -45,21 +34,13 @@ const Login = () => {
         // &${code_challenge_method}&${code_challenge}`;
 
         setUri(`${url}${queryString}`)
-        // fetch(`${url}${queryString}`).then((res) => {
-        //     console.log({ res })
-        //     setHtmlString('<h1>I have returned</h1>');
-        // })
-        //     .catch((e) => {
-        //         console.log(e)
-        //     });
     }
 
     const handleAuthResponse = (res) => {
-        if(res.url.includes('http://localhost/?code=')){
-            setUri(`<h1>${res.url.substring(22)}</h1>`);
-            setAuthCode(res.url.substring(22));
+        if (res.url.includes('http://localhost/?code=')) {
+            setUri('');
+            setHtml(res.url.substring(22));
         }
-        console.log(res)
     }
     return (
         <View
@@ -72,7 +53,7 @@ const Login = () => {
             {
                 uri ?
                     <WebView
-                        source={{ uri: uri }}
+                        source={{ uri: uri, html: html }}
                         style={{ flex: 1, textColor: 'black' }}
                         onNavigationStateChange={handleAuthResponse} /> :
                     null
