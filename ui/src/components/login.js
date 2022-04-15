@@ -3,9 +3,10 @@ import { Buttons } from "react-native/Libraries/Alert/Alert";
 import { View, Text, Button } from 'react-native';
 import { WebView } from 'react-native-webview'
 import base64url from 'base64url'
+import { LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
 
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [uri, setUri] = useState('');
     const [authCode, setAuthCode] = useState('');
     const [html, setHtml] = useState('');
@@ -39,9 +40,11 @@ const Login = () => {
     const handleAuthResponse = (res) => {
         if (res.url.includes('http://localhost/?code=')) {
             setUri('');
-            setHtml(res.url.substring(22));
+            setAuthCode(res.url.substring(22));
+            navigation.navigate('Song')
         }
     }
+    console.log('rendering login')
     return (
         <View
             style={{ flex: 1, color: 'black' }}>
